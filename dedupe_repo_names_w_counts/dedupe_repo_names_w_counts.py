@@ -9,7 +9,7 @@ def parse_arguments():
     parser.add_argument('-i', '--input_file',
                         help='Path to the input CSV file')
     parser.add_argument('-o', '--output_file',
-                        help='Path to the output CSV file')
+                        default='dedupe_repo_names_w_counts.csv', help='Path to the output CSV file')
     return parser.parse_args()
 
 

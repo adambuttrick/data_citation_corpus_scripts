@@ -21,8 +21,8 @@ def is_valid_subjid(subjid, pattern):
     return re.match(pattern, subjid) is not None
 
 
-def normalize_filename(filename):
-    base_name = os.path.splitext(os.path.basename(filename))[0]
+def normalize_repository_name(repository):
+    base_name = os.path.splitext(os.path.basename(repository))[0]
     return re.sub(r'[^a-zA-Z0-9]', '', base_name)
 
 

@@ -27,6 +27,16 @@ def normalize_repository_name(repository):
     return re.sub(r'[^a-zA-Z0-9]', '', base_name)
 
 
+def normalize_doi(doi):
+    if not doi:
+        return ''
+    for prefix in ['http://doi.org/', 'https://doi.org/', 'http://dx.doi.org/', 'https://dx.doi.org/']:
+        if doi.startswith(prefix):
+            doi = doi.lower().strip()
+            doi = doi[len(prefix):]
+    return doi
+
+
 def parse_date(date_string):
     try:
         return datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%f%z")
@@ -45,7 +55,8 @@ def process_csv(input_file, repository, pattern):
             unique_pairs = {}
             for row in reader:
                 if row['repository'] == repository:
-                    key = (row['objId'], row['subjId'])
+                    normalized_objid, normalized_subjid = normalize_doi(row['objId']), normalize_doi(row['subjId'])
+                    key = (normalized_objid, normalized_subjid)
                     current_date = parse_date(row['updated'])
                     if key not in unique_pairs or current_date > parse_date(unique_pairs[key]['updated']):
                         unique_pairs[key] = row
@@ -55,11 +66,12 @@ def process_csv(input_file, repository, pattern):
                 invalid_file, fieldnames=fieldnames)
             valid_writer.writeheader()
             invalid_writer.writeheader()
-            for (objId, subjId), row in unique_pairs.items():
-                if is_valid_subjid(subjId, pattern):
+            for (objId, normalized_subjid), row in unique_pairs.items():
+                if is_valid_subjid(row['subjId'], pattern):
                     valid_writer.writerow(row)
                 else:
                     invalid_writer.writerow(row)
+
         print(f"Processing complete. Valid rows written to {valid_output}, invalid rows written to {invalid_output}")
     except IOError as e:
         print(f"An error occurred while processing the file: {e}", file=sys.stderr)

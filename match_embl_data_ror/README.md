@@ -27,4 +27,4 @@ Adds columns to the input CSV:
 - matched_ids: Semicolon-separated list of matched ROR IDs
 - extracted_orgs: Semicolon-separated list of extracted organization names
 
-If no output file is specified, creates `<input_filename>_w_embl_data.csv`.
+If no output file is specified, creates `<input_filename>_extracted_org_names_matched_ror.csv.

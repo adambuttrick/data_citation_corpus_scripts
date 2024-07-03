@@ -1,6 +1,4 @@
-Here's a concise README for the match_embl_data_ror.py script:
-
-# match_embl_data_ror
+# Match EMBL data to ROR
 
 Script to process CSV files containing European Nucleotide Archive entries reconciled with EMBL data, extracting organization names and matching ROR IDs. Uses the `ner-english-large` model from the [Flair library](https://github.com/flairNLP/flair?tab=readme-ov-file) for named entity recognition (NER) to identify organization names and the ROR API to retrieve the associated ROR IDs.
 

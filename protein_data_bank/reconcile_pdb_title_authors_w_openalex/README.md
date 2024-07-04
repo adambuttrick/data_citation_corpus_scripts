@@ -1,4 +1,4 @@
-# PDB OpenAlex Data Reconciliation
+# PDB OpenAlex data reconciliation
 
 Script to reconcile data citation corpus + PDB metadata file with OpenAlex API, matching works to extact authors and affiliations.
 

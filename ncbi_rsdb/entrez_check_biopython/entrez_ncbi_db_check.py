@@ -42,7 +42,7 @@ def process_and_write(input_file, output_file):
         writer.writeheader()
         for row in reader:
             accession_number = row['accessionNumber']
-            ncbi_url, lab_host, valid = query_ncbi(accession_number)
+            valid, ncbi_url, lab_host = query_ncbi(accession_number)
             row.update({
                 'Valid': valid,
                 'NCBI_URL': ncbi_url,

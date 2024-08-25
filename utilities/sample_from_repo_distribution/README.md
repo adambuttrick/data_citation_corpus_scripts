@@ -1,14 +1,15 @@
 # DCC Data Sampler
 
-Samples and processes data from a combined Data Citation Corpus (DCC) CSV file, based on repository distribution.
-
+Samples and processes data from a combined Data Citation Corpus (DCC) CSV file, based on repository distribution and creates additional samples for unspecified and random data.
 
 ## Installation
+
 ```
 pip install -r requirements.txt
 ```
 
 ## Usage
+
 ```
 python sample_dcc_data.py -i INPUT_FILE -r REPO_DISTRIBUTION_FILE -o OUTPUT_DIR -s SAMPLES_PER_GROUP [-n NUM_FILES]
 ```
@@ -28,28 +29,14 @@ The script creates a directory structure in the specified output directory:
 ```
 output_dir/
 ├── High_(>10%)/
-│   ├── sample_1.csv
-│   ├── sample_1.json
-│   └── ...
 ├── Medium_(1-10%)/
-│   ├── sample_1.csv
-│   ├── sample_1.json
-│   └── ...
 ├── Low_(0.1-1%)/
-│   ├── sample_1.csv
-│   ├── sample_1.json
-│   └── ...
 ├── Very_Low_(<0.1%)/
-│   ├── sample_1.csv
-│   ├── sample_1.json
-│   └── ...
-└── Unspecified/
-    ├── sample_1.csv
-    ├── sample_1.json
-    └── ...
+├── Unspecified/
+└── Random_Sample/
 ```
 
-Each sample file contains the specified number of randomly selected entries from the corresponding repository group.
+Each directory contains sample files (both CSV and JSON) based on the specified parameters.
 
 ## Repository Grouping
 
@@ -59,5 +46,11 @@ Repositories are grouped based on their percentage of the total data:
 - Medium (1-10%)
 - Low (0.1-1%)
 - Very Low (<0.1%)
-- Unspecified (for entries with missing or empty repository information)
 
+## Additional Sampling
+
+In addition to the repository-based samples, the script provides two more types of samples:
+
+1. **Unspecified Data**: Entries with missing or empty repository information are grouped under the "Unspecified" category. These are sampled separately to ensure representation of data without clear repository attribution.
+
+2. **Random Sampling**: A random sample is created from across all input data, including both specified and unspecified repository entries. This provides an unbiased representation of the entire dataset.

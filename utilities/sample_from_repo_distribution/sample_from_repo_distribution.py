@@ -99,6 +99,15 @@ def sample_data(data_df, repo_groups, samples_per_group, num_files):
     return sampled_data
 
 
+def create_random_sample(data_df, samples_per_group, num_files):
+    random_samples = []
+    for _ in range(num_files):
+        random_sample = data_df.sample(n=min(len(data_df), samples_per_group))
+        random_samples.append(random_sample)
+    logging.info(f"Created {num_files} random samples, each with {samples_per_group} samples out of {len(data_df)} available")
+    return random_samples
+
+
 def create_nested_object(data, keys):
     for key in keys:
         if key in data and pd.notna(data[key]):
@@ -189,6 +198,11 @@ def main():
         sampled_data = sample_data(
             data_df, repo_groups, args.samples_per_group, args.num_files)
         generate_output(sampled_data, args.output_dir)
+        random_samples = create_random_sample(
+            data_df, args.samples_per_group, args.num_files)
+        random_output_dir = os.path.join(args.output_dir, "Random_Sample")
+        generate_output({"Random": random_samples}, random_output_dir)
+
         logging.info(
             "Data sampling, CSV saving, and JSON serialization completed successfully")
     except Exception as e:

@@ -58,21 +58,25 @@ def process_files(csv_files, csv_output):
             with open(file, 'r', encoding='utf-8') as infile:
                 reader = csv.DictReader(infile)
                 for row in reader:
-                    normalized_objid = normalize_doi(row['objId'])
-                    normalized_subjid = normalize_doi(row['subjId'])
-                    key = f"{normalized_objid}|{normalized_subjid}"
+                    normalized_dataset = normalize_doi(row['dataset'])
+                    normalized_publication = normalize_doi(row['publication'])
+                    key = f"{normalized_dataset}|{normalized_publication}"
                     updated = parse_date(row['updated'])
                     if key not in data_dict or updated > parse_date(data_dict[key]['updated']):
                         data_dict[key] = row
         except Exception as e:
             logging.error(f"Error processing CSV file {file}: {str(e)}")
+
     logging.info(f"Writing processed CSV data to {csv_output}")
     with open(csv_output, 'w', encoding='utf-8') as outfile:
         if data_dict:
-            writer = csv.DictWriter(outfile, fieldnames=next(
-                iter(data_dict.values())).keys())
+            fieldnames = ['id', 'created', 'updated', 'repository', 'publisher', 'journal', 'title',
+                          'publication', 'dataset', 'publishedDate', 'source', 'subjects', 'affiliations', 'funders']
+            writer = csv.DictWriter(outfile, fieldnames=fieldnames)
             writer.writeheader()
-            writer.writerows(data_dict.values())
+            for row in data_dict.values():
+                writer.writerow({field: row.get(field, '')
+                                 for field in fieldnames})
 
 
 def main():

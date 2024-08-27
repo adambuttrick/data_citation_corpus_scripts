@@ -5,7 +5,7 @@ Processes and combines multiple Data Citation Corpus (DCC) CSV files from , norm
 
 ## Usage
 ```
-python csv_combiner.py -i INPUT_DIR [-o OUTPUT_DIR] [-v]
+python combine_dcc_csv_files.py -i INPUT_DIR [-o OUTPUT_DIR] [-v]
 ```
 
 ### Arguments
@@ -17,8 +17,8 @@ python csv_combiner.py -i INPUT_DIR [-o OUTPUT_DIR] [-v]
 ## Input
 
 Script expects the CSV files from the DCC data file, specifically a top-level directory contiaing CSV files in a "csv" directory. Each CSV file should contain at least the following columns:
-- objId
-- subjId
+- publication
+- dataset
 - updated
 
 ## Output

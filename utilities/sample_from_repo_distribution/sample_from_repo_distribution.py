@@ -135,12 +135,10 @@ def transform_row(row):
         "publisher": create_nested_object(row, ["publisher"]),
         "journal": create_nested_object(row, ["journal"]),
         "title": replace_nan(row.get("title")),
-        "objId": replace_nan(row.get("objId")),
-        "subjId": replace_nan(row.get("subjId")),
+        # Changed from objId
+        "publication": replace_nan(row.get("publication")),
+        "dataset": replace_nan(row.get("dataset")),  # Changed from subjId
         "publishedDate": replace_nan(row.get("publishedDate")),
-        "accessionNumber": replace_nan(row.get("accessionNumber")),
-        "doi": replace_nan(row.get("doi")),
-        "relationTypeId": replace_nan(row.get("relationTypeId")),
         "source": replace_nan(row.get("source")),
         "affiliations": convert_to_array(row.get("affiliations")),
         "funders": convert_to_array(row.get("funders")),
